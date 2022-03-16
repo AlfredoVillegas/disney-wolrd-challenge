@@ -3,4 +3,5 @@ dist/
 .tmp
 coverage/
 logs/
-
+disney.sql
+src/pru.ts
