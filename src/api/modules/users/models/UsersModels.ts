@@ -1,5 +1,5 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
-import { db } from '../../../../dbConnection';
+import { dbConnectionSequelize } from '../../../../db/dbConnection';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: string;
@@ -30,6 +30,6 @@ User.init(
   },
   {
     tableName: 'Users',
-    sequelize: db
+    sequelize: dbConnectionSequelize
   }
 );

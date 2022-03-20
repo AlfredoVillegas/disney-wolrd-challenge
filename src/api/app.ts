@@ -1,14 +1,15 @@
 import { config } from 'dotenv';
-import { db } from '../dbConnection';
+import { dbConnectionSequelize } from '../db/dbConnection';
 import { Server } from './server';
+
 config();
 
 (async () => {
   try {
-    await db.authenticate();
+    await dbConnectionSequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    return console.error('Unable to connect to the database:', error);
   }
   try {
     console.log('Init Server...');
