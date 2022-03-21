@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
 import { initRouterAuth } from './modules/auth/init';
+import { initRouterCharacter } from './modules/characters/init';
 import { initRouterUsers } from './modules/users/init';
 
 export class Server {
@@ -24,6 +25,7 @@ export class Server {
   initRoutes() {
     initRouterAuth(this.app);
     initRouterUsers(this.app);
+    initRouterCharacter(this.app);
   }
 
   async listen() {
