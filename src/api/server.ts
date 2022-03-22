@@ -2,6 +2,8 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import { initRouterAuth } from './modules/auth/init';
 import { initRouterCharacter } from './modules/characters/init';
+import { initRouterGenres } from './modules/genres/init';
+import { initRouterMovies } from './modules/movies/init';
 import { initRouterUsers } from './modules/users/init';
 
 export class Server {
@@ -26,6 +28,8 @@ export class Server {
     initRouterAuth(this.app);
     initRouterUsers(this.app);
     initRouterCharacter(this.app);
+    initRouterGenres(this.app);
+    initRouterMovies(this.app);
   }
 
   async listen() {

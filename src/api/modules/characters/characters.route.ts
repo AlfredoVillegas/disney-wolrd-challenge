@@ -7,21 +7,23 @@ import { FindCharacterDetailControllers } from './controllers/FindCharacterDetai
 import { CharactersCrudService } from './services/CharactersCrud';
 
 export function registerRouterCharacter(): Router {
-  const routersUser = Router();
+  const routersCharacters = Router();
   const crudService = new CharactersCrudService();
 
-  routersUser.get('/characters', (req: Request, res: Response) => findCharactersAllControllers(req, res));
+  routersCharacters.get('/characters', (req: Request, res: Response) => findCharactersAllControllers(req, res));
 
-  routersUser.get('/characters/:id', (req: Request, res: Response) => FindCharacterDetailControllers(req, res));
+  routersCharacters.get('/characters/:id', (req: Request, res: Response) => FindCharacterDetailControllers(req, res));
 
   const characterPostController = new CharacterPostController(crudService);
-  routersUser.post('/characters', (req: Request, res: Response) => characterPostController.run(req, res));
+  routersCharacters.post('/characters', (req: Request, res: Response) => characterPostController.run(req, res));
 
   const characterUpdaterController = new CharacterUpdateController(crudService);
-  routersUser.patch('/characters/:id', (req: Request, res: Response) => characterUpdaterController.run(req, res));
+  routersCharacters.patch('/characters/:id', (req: Request, res: Response) => characterUpdaterController.run(req, res));
 
   const characterDeleterController = new CharacterDeleterController(crudService);
-  routersUser.delete('/characters/:id', (req: Request, res: Response) => characterDeleterController.run(req, res));
+  routersCharacters.delete('/characters/:id', (req: Request, res: Response) =>
+    characterDeleterController.run(req, res)
+  );
 
-  return routersUser;
+  return routersCharacters;
 }
