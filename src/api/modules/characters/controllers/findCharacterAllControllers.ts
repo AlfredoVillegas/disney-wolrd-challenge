@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { classicNameResolver } from 'typescript';
 import { findCharactersAll } from '../services/CharactersFinderAll';
+
 /*
 interface queryTypes {
   name: string;

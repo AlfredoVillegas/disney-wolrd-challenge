@@ -16,7 +16,7 @@ export class Character extends Model<InferAttributes<Character>, InferCreationAt
     const { Movie, MoviesCharactersRelation } = sequelize.models;
 
     this.belongsToMany(Movie, {
-      as: 'moviesLinked',
+      as: 'movies',
       through: MoviesCharactersRelation,
       foreignKey: 'characterId',
       otherKey: 'movieId'

@@ -1,47 +1,32 @@
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
 import { dbConnectionSequelize } from '../../../../db/dbConnection';
 
 const { Character, Movie } = dbConnectionSequelize.models;
 
-// buscar por nombre, y filtrar por edad, peso o películas/series
+export async function findCharactersAll(filters: { name?: string; age?: number; weigth?: number; movieId?: string }) {
+  const options = buildOptions(filters);
 
-export async function findCharactersAll(filter?: { name?: string; age?: number; weigth?: number; movieId?: string }) {
-  const options = buildOptions(filter);
+  if (filters && filters.movieId) {
+    const movie: any = await Movie.findByPk(filters.movieId);
+    return await movie.getCharacters(options);
+  }
 
-  const characters = await Character.findAll(options);
-
-  console.log(characters);
-  return characters;
+  return await Character.findAll(options);
 }
 
-function buildOptions(filter: any = {}) {
+function buildOptions(filters: any = {}) {
   const options = {
     attributes: ['name', 'imageUrl'],
     where: {},
-    include: [
-      'moviesLinked'
-      /*{
-        //model: Movie,
-        as: 'moviesLinked'
-        //attributes: ['id']
-        through: {
-          where: {
-            movieId: 'mo'
-          }
-        }
-      }*/
-    ]
+    joinTableAttributes: []
   };
 
-  if (filter.name) {
-    options.where = { ...options.where, name: { [Op.like]: `%${filter.name}%` } };
+  if (filters.name) {
+    options.where = { ...options.where, name: { [Op.like]: `%${filters.name}%` } };
   }
+  options.where = filters.age ? { ...options.where, age: filters.age } : options.where;
+  options.where = filters.weigth ? { ...options.where, weigth: filters.weigth } : options.where;
 
-  options.where = filter.age ? { ...options.where, age: filter.age } : options.where;
-
-  options.where = filter.weigth ? { ...options.where, weigth: filter.weigth } : options.where;
-
-  //options.where = filter.movieId ? { ...options.where, moviesLinked: filter.movieId } : options.where;
-
+  //console.log(options);
   return options;
 }

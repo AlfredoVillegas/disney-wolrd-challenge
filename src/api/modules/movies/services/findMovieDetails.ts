@@ -5,7 +5,7 @@ const { Movie } = dbConnectionSequelize.models;
 
 export async function findMovieDetailsService(id: string) {
   const movie = await Movie.findByPk(id, {
-    include: 'charactersLinked'
+    include: 'characters'
   });
   if (!movie) {
     throw new MovieNotExist(id);

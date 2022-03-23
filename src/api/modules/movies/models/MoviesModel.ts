@@ -14,7 +14,7 @@ export class Movie extends Model<InferAttributes<Movie>, InferCreationAttributes
   static associate(sequelize: Sequelize) {
     const { Character, MoviesCharactersRelation, Genre } = sequelize.models;
     this.belongsToMany(Character, {
-      as: 'charactersLinked',
+      as: 'characters',
       through: MoviesCharactersRelation,
       foreignKey: 'movieId',
       otherKey: 'characterId'

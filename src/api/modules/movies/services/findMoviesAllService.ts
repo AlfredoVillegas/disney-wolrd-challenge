@@ -15,8 +15,8 @@ function buildOptions(filters: any = {}) {
   const options: any = {
     attributes: ['title', 'imageUrl'],
     where: {},
-    order: [],
-    include: ['charactersLinked']
+    order: []
+    //include: ['characters']
   };
 
   if (filters.title) {
