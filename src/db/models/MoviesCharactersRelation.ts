@@ -27,7 +27,6 @@ export const MoviesCharactersRelationSchema = {
     type: DataTypes.INTEGER
   },
   createdAt: {
-    allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at'
   },

@@ -19,8 +19,11 @@ export class CharactersCrudService {
     age: number;
     weight: number;
     history: string;
+    movies?: string[];
   }) {
-    return await Character.create(dataCharacter);
+    const character: any = await Character.create(dataCharacter);
+    await character.addMovies(dataCharacter.movies);
+    return character;
   }
 
   async delete(id: string) {
@@ -36,9 +39,13 @@ export class CharactersCrudService {
       age?: number;
       weight?: number;
       history?: string;
+      movies?: string[];
     }
   ) {
-    const character = await this.findOneById(id);
+    const character: any = await this.findOneById(id);
+
+    await character.addMovies(dataChanges.movies);
+
     return await character.update(dataChanges);
   }
 }

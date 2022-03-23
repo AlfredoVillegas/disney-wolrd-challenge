@@ -12,8 +12,18 @@ export class MoviesCrudService {
     return movie;
   }
 
-  async create(dataCharacter: { id: string; title: string; imageUrl: string; qualification: number; genreId: string }) {
-    return await Movie.create(dataCharacter);
+  async create(dataMovie: {
+    id: string;
+    title: string;
+    imageUrl: string;
+    qualification: number;
+    genreId: string;
+    charactersId?: string[];
+  }) {
+    console.log(dataMovie);
+    const movie: any = await Movie.create(dataMovie);
+    await movie.addCharacters(dataMovie.charactersId);
+    return movie;
   }
 
   async delete(id: string) {
@@ -28,9 +38,11 @@ export class MoviesCrudService {
       imageUrl?: string;
       qualification?: number;
       genre?: string;
+      charactersId?: string[];
     }
   ) {
-    const genre = await this.findOneById(id);
-    return await genre.update(dataChanges);
+    const movie: any = await this.findOneById(id);
+    await movie.addCharacters(dataChanges.charactersId);
+    return await movie.update(dataChanges);
   }
 }

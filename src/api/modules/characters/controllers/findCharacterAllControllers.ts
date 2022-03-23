@@ -9,17 +9,12 @@ interface queryTypes {
 }
 */
 export async function findCharactersAllControllers(req: Request, res: Response) {
-  const { name, age, weigth, movieId } = req.query as any;
-
-  const characters = await findCharactersAll({ name, age, weigth, movieId });
-  res.status(200).json({ data: characters });
-}
-
-/* try {
+  try {
     const { name, age, weigth, movieId } = req.query as any;
 
     const characters = await findCharactersAll({ name, age, weigth, movieId });
     res.status(200).json({ data: characters });
   } catch (err: any) {
     res.status(400).json({ errorMessage: err.message });
-  } */
+  }
+}
