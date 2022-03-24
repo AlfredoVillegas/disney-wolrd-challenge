@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import { sendWelcomeUserEmailService } from '../../emails/initEmailServices';
 import { UserEmailAlreadyExists } from '../Errors';
 import { User } from '../models/UsersModels';
 
@@ -12,10 +13,15 @@ export class UserCreator {
     const passwordHash = await this.encryptPassword(password);
 
     await User.create({ name: name, id: id, email: email, password: passwordHash });
+    this.userRegisteredEvent(email);
   }
 
   private async encryptPassword(password: string) {
     const saltOrRounds = 10;
     return await bcrypt.hash(password, saltOrRounds);
+  }
+
+  private async userRegisteredEvent(email: string) {
+    sendWelcomeUserEmailService.execute(email);
   }
 }

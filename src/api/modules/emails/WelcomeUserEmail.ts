@@ -1,6 +1,8 @@
+import { config } from 'dotenv';
 import { Email } from './Email';
+config();
 
-const CompanyEmail = process.env.EMAIL || 'example@fail.com';
+const CompanyEmail = process.env.EMAIL || '';
 
 export class WelcomeUserEmail extends Email {
   constructor(toEmail: string) {
