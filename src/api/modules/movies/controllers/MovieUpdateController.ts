@@ -9,6 +9,7 @@ export class MovieUpdateController {
     try {
       const { id } = req.params;
       const body = req.body;
+      body.imageUrl = req.body.filePath;
       await this.crudService.update(id, body);
 
       res.status(201).send();

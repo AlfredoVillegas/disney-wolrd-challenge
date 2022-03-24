@@ -1,12 +1,11 @@
-import { InferAttributes, InferCreationAttributes, Model, CreationOptional, DataTypes, Sequelize } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from 'sequelize';
 
 export const GENRE_TABLE_NAME = 'genres';
 
 export class Genre extends Model<InferAttributes<Genre>, InferCreationAttributes<Genre>> {
   declare id: string;
   declare name: string;
-  declare imageUrl: string;
-
+  declare imageUrl?: string;
   declare createdAt: CreationOptional<Date>;
 
   static associate(sequelize: Sequelize) {
@@ -33,11 +32,14 @@ export const GenreSchema = {
     unique: true
   },
   name: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
   imageUrl: {
     field: 'image_url',
     type: DataTypes.STRING
   },
+
   createdAt: DataTypes.DATE
 };

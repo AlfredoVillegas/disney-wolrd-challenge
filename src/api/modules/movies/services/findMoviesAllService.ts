@@ -13,9 +13,10 @@ export async function findMoviesAllService(filters?: { title?: string; genreId?:
 
 function buildOptions(filters: any = {}) {
   const options: any = {
-    attributes: ['title', 'imageUrl'],
+    attributes: ['title', 'imageUrl', 'createdAt'],
     where: {},
     order: []
+    //joinTableAttributes: []
     //include: ['characters']
   };
 

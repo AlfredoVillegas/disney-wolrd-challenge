@@ -38,7 +38,8 @@ export const MovieSchema = {
     unique: true
   },
   title: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   imageUrl: {
     field: 'image_url',

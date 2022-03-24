@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import { dbConnectionSequelize } from '../../../../db/dbConnection';
+import { MovieNotExist } from '../../movies/Errors';
 
 const { Character, Movie } = dbConnectionSequelize.models;
 
@@ -8,6 +9,8 @@ export async function findCharactersAll(filters: { name?: string; age?: number; 
 
   if (filters && filters.movieId) {
     const movie: any = await Movie.findByPk(filters.movieId);
+    if (!movie) throw new MovieNotExist(filters.movieId);
+
     return await movie.getCharacters(options);
   }
 

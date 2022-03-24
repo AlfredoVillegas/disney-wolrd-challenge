@@ -15,7 +15,7 @@ export class MoviesCrudService {
   async create(dataMovie: {
     id: string;
     title: string;
-    imageUrl: string;
+    imageUrl?: string;
     qualification: number;
     genreId: string;
     charactersId?: string[];

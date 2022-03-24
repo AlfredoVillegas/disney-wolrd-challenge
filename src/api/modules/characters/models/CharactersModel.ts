@@ -39,7 +39,8 @@ export const CharacterSchema = {
     unique: true
   },
   name: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   imageUrl: {
     field: 'image_url',

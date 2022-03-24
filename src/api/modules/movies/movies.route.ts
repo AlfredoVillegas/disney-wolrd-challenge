@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { uploadImageMiddelware } from '../../../shared/uploadImageMulter';
 import { findMovieDetailsControllers } from './controllers/findMovieDetailsController';
 import { findMoviesAllController } from './controllers/findMoviesAllController';
 import { MovieDeleterController } from './controllers/MovieDeleteController';
@@ -15,10 +16,14 @@ export function registerRouterMovies(): Router {
   routersMovies.get('/movies/:id', (req: Request, res: Response) => findMovieDetailsControllers(req, res));
 
   const moviePostController = new MoviePostController(crudService);
-  routersMovies.post('/movies', (req: Request, res: Response) => moviePostController.run(req, res));
+  routersMovies.post('/movies', uploadImageMiddelware.single('image'), (req: Request, res: Response) =>
+    moviePostController.run(req, res)
+  );
 
   const movieUpdaterController = new MovieUpdateController(crudService);
-  routersMovies.patch('/movies/:id', (req: Request, res: Response) => movieUpdaterController.run(req, res));
+  routersMovies.patch('/movies/:id', uploadImageMiddelware.single('image'), (req: Request, res: Response) =>
+    movieUpdaterController.run(req, res)
+  );
 
   const movieDeleterController = new MovieDeleterController(crudService);
   routersMovies.delete('/movies/:id', (req: Request, res: Response) => movieDeleterController.run(req, res));

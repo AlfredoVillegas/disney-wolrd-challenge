@@ -1,7 +1,7 @@
-import { dbConnectionSequelize } from '../../../../db/dbConnection';
 import { GenreNotExist } from '../Errors';
+import { Genre } from '../models/GenresModel';
 
-const { Genre } = dbConnectionSequelize.models;
+//const { Genre } = dbConnectionSequelize.models;
 
 export class GenresCrudService {
   async findOneById(id: string) {
@@ -12,8 +12,9 @@ export class GenresCrudService {
     return genre;
   }
 
-  async create(dataCharacter: { id: string; name: string; imageUrl: string }) {
-    return await Genre.create(dataCharacter);
+  async create(dataGenre: { id: string; name: string; imageUrl?: string }) {
+    const genre = Genre.create(dataGenre);
+    return genre;
   }
 
   async delete(id: string) {
