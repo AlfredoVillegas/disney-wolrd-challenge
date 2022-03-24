@@ -1,5 +1,6 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { uploadImageMiddelware } from '../../../shared/uploadImageMulter';
+import { verifyUserIsAuthenticated } from '../auth/middelwares/VerifyUserIsAuthenticated';
 import { CharacterDeleterController } from './controllers/CharacterDeleterController';
 import { CharacterPostController } from './controllers/CharacterPostController';
 import { CharacterUpdateController } from './controllers/CharacterUpdateControllers';
@@ -9,6 +10,9 @@ import { CharactersCrudService } from './services/CharactersCrud';
 
 export function registerRouterCharacter(): Router {
   const routersCharacters = Router();
+  //Route
+  routersCharacters.use((req: Request, res: Response, next: NextFunction) => verifyUserIsAuthenticated(req, res, next));
+
   const crudService = new CharactersCrudService();
 
   routersCharacters.get('/characters', (req: Request, res: Response) => findCharactersAllControllers(req, res));

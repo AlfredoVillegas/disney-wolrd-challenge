@@ -1,5 +1,6 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { uploadImageMiddelware } from '../../../shared/uploadImageMulter';
+import { verifyUserIsAuthenticated } from '../auth/middelwares/VerifyUserIsAuthenticated';
 import { findMovieDetailsControllers } from './controllers/findMovieDetailsController';
 import { findMoviesAllController } from './controllers/findMoviesAllController';
 import { MovieDeleterController } from './controllers/MovieDeleteController';
@@ -9,6 +10,8 @@ import { MoviesCrudService } from './services/MoviesCrud';
 
 export function registerRouterMovies(): Router {
   const routersMovies = Router();
+  routersMovies.use((req: Request, res: Response, next: NextFunction) => verifyUserIsAuthenticated(req, res, next));
+
   const crudService = new MoviesCrudService();
 
   routersMovies.get('/movies', (req: Request, res: Response) => findMoviesAllController(req, res));
