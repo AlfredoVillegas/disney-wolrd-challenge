@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseError, responseSuccess } from '../../../../shared/network/response';
 import { GenreNotExist } from '../Errors';
 import { GenresCrudService } from '../services/GenresCrud';
 
@@ -9,12 +10,12 @@ export class GenreByIdController {
     try {
       const { id } = req.params;
       const genre = await this.crudService.findOneById(id);
-      res.status(200).json({ data: genre });
+      responseSuccess(res, 200, genre);
     } catch (err: any) {
       if (err instanceof GenreNotExist) {
-        res.status(404).json({ errorMessage: err.message });
+        responseError(res, 404, err.message);
       } else {
-        res.status(500).json({ errorMessage: 'server error' });
+        responseError(res);
       }
     }
   }

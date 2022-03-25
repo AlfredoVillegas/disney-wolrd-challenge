@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseError, responseSuccess } from '../../../../shared/network/response';
 import { CharacterNotExist } from '../Errors';
 import { CharactersCrudService } from '../services/CharactersCrud';
 
@@ -9,12 +10,12 @@ export class CharacterDeleterController {
     try {
       const { id } = req.params;
       await this.crudService.delete(id);
-      res.status(200).send();
-    } catch (err: any) {
+      responseSuccess(res);
+    } catch (err) {
       if (err instanceof CharacterNotExist) {
-        res.status(404).json({ errorMessage: err.message });
+        responseError(res, 404, err.message);
       } else {
-        res.status(500).json({ errorMessage: 'server error' });
+        responseError(res);
       }
     }
   }

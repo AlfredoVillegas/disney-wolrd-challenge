@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseError, responseSuccess } from '../../../../shared/network/response';
 import { CharactersCrudService } from '../services/CharactersCrud';
 
 export class CharacterPostController {
@@ -9,9 +10,9 @@ export class CharacterPostController {
       const body = req.body;
       body.imageUrl = req.body.filePath;
       await this.crudService.create(body);
-      res.status(201).send();
+      responseSuccess(res, 201);
     } catch (err: any) {
-      res.status(400).json({ errorMessage: err.message });
+      responseError(res, 500, err.message);
     }
   }
 }

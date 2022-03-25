@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseSuccess } from '../../../../shared/network/response';
 import { MovieNotExist } from '../Errors';
 import { MoviesCrudService } from '../services/MoviesCrud';
 
@@ -11,8 +12,7 @@ export class MovieUpdateController {
       const body = req.body;
       body.imageUrl = req.body.filePath;
       await this.crudService.update(id, body);
-
-      res.status(201).send();
+      responseSuccess(res, 201);
     } catch (err: any) {
       if (err instanceof MovieNotExist) {
         res.status(404).json({ errorMessage: err.message });

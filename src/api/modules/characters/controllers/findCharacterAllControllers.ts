@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseError, responseSuccess } from '../../../../shared/network/response';
 import { findCharactersAll } from '../services/CharactersFinderAll';
 
 /*
@@ -11,10 +12,9 @@ interface queryTypes {
 export async function findCharactersAllControllers(req: Request, res: Response) {
   try {
     const { name, age, weigth, movie } = req.query as any;
-
     const characters = await findCharactersAll({ name, age, weigth, movieId: movie });
-    res.status(200).json({ data: characters });
+    responseSuccess(res, 200, characters);
   } catch (err: any) {
-    res.status(400).json({ errorMessage: err.message });
+    responseError(res, 500, err.message);
   }
 }

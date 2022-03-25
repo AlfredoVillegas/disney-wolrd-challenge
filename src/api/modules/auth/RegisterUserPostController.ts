@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseError, responseSuccess } from '../../../shared/network/response';
 import { UserCreator } from '../users/services/UserCreator';
 
 export class RegisterUserPostController {
@@ -8,9 +9,9 @@ export class RegisterUserPostController {
     try {
       const { id, email, name, password } = req.body;
       await this.createUserService.execute(id, email, name, password);
-      res.status(201).send();
+      responseSuccess(res, 201);
     } catch (err: any) {
-      res.status(500).json({ errorMessage: err.message });
+      responseError(res, 500, err.mesagge);
     }
   }
 }

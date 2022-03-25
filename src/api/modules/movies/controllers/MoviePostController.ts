@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { responseSuccess } from '../../../../shared/network/response';
 import { MoviesCrudService } from '../services/MoviesCrud';
 
 export class MoviePostController {
@@ -9,7 +10,7 @@ export class MoviePostController {
       const body = req.body;
       body.imageUrl = req.body.filePath;
       await this.crudService.create(body);
-      res.status(201).send();
+      responseSuccess(res, 201);
     } catch (err: any) {
       res.status(400).json({ errorMessage: err.message });
     }

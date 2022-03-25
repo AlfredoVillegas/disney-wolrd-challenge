@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { responseError, responseSuccess } from '../../../shared/network/response';
 import { User } from '../users/models/UsersModels';
 
 export async function loginPostController(req: Request, res: Response): Promise<void> {
@@ -13,8 +14,7 @@ export async function loginPostController(req: Request, res: Response): Promise<
 
     const isPasswordCorrect = user ? await bcrypt.compare(password, user.password) : false;
     if (!isPasswordCorrect) {
-      res.status(401).json({ errorMessage: 'invalid user or password' });
-      return;
+      return responseError(res, 401, 'invalid user or password');
     }
 
     const userForToken = {
@@ -22,9 +22,8 @@ export async function loginPostController(req: Request, res: Response): Promise<
     };
 
     const token = jwt.sign(userForToken, process.env.SECRET_KEY || 'Dev');
-
-    res.status(200).json({ name: user?.name, token: token });
+    responseSuccess(res, 200, { name: user?.name, token });
   } catch (err: any) {
-    res.status(500).json({ errorMessage: err.message });
+    responseError(res, 500, err.message);
   }
 }
