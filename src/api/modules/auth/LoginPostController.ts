@@ -1,9 +1,10 @@
 import * as bcrypt from 'bcrypt';
+import { config } from 'dotenv';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { responseError, responseSuccess } from '../../../shared/network/response';
 import { User } from '../users/models/UsersModels';
-
+config();
 export async function loginPostController(req: Request, res: Response): Promise<void> {
   try {
     const { email, password } = req.body;
