@@ -1,7 +1,8 @@
 node_modules/
 dist/
-.tmp
+public/
 coverage/
 logs/
 disney.sql
 src/pru.ts
+.tmp

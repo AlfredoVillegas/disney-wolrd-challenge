@@ -15,7 +15,7 @@ export class CharactersCrudService {
   async create(dataCharacter: {
     id: string;
     name: string;
-    imageUrl: string;
+    imageUr?: string;
     age: number;
     weight: number;
     history: string;

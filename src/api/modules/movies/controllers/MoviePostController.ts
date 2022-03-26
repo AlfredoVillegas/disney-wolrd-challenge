@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { responseSuccess } from '../../../../shared/network/response';
+import { responseError, responseSuccess } from '../../../../shared/network/response';
 import { MoviesCrudService } from '../services/MoviesCrud';
 
 export class MoviePostController {
